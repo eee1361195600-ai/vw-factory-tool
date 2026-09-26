@@ -22,12 +22,12 @@
 
 ### 自动重新登录（Outlook 邮箱验证码，仅 Windows）
 - 登录彻底失效时可自动重新登录：卡片右键「重新登录（自动接码）」，或在刷新额度失败时自动触发（同账号 30 分钟内最多一次）。
-- 需要 `tools\factory_relogin.exe` 与 exe 同目录；首次使用会自动下载浏览器组件（约 150MB，存于 `tools\ms-playwright`）。
+- 需要 `tools\factory_relogin.exe` 与 exe 同目录；全程后台完成，不会打开浏览器窗口。
 - 验证码从该账号的 Outlook 邮箱读取。Outlook 账号行格式：`email----password----client_id----refresh_token`（也接受 `:`、`|`、制表符分隔）。
   - 卡片右键「导入/覆盖 Outlook 账号…」保存，「复制 Outlook 账密+rt」可复制该行；卡片上「有rt / 无rt」表示是否已导入。
   - 「添加账号」时可直接粘贴 Outlook 账号行：名称默认取邮箱，保存后自动完成登录。只填邮箱则名称取邮箱、按普通方式手动登录。
   - Outlook 凭据加密保存在本机，仅当前 Windows 用户可读取；refresh_token 被微软轮换后会自动更新。
-- 设置文件 `%LOCALAPPDATA%\vwFactory\relogin.json`（首次运行自动创建）可配置 `Proxy`（代理）和 `Headless`（是否隐藏浏览器窗口），留空使用默认值。
+- 设置文件 `%LOCALAPPDATA%\vwFactory\relogin.json`（首次运行自动创建）可配置 `Proxy`（代理），留空使用默认值。
 
 ### 账号管理（卡片右键）
 - 编辑名称、重新登录、导入 Outlook 账号。
