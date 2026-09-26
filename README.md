@@ -18,7 +18,7 @@
 ### 额度与凭据
 - 卡片显示各账号剩余额度，可在 Standard / Droid Core 两种视图切换。
 - 一键刷新所有账号的额度和登录有效期；快过期时自动续期。
-- 每小时自动「检测续接」：只对 2 小时内到期的账号续期；续期失败且已导入 Outlook 账号的会自动重新登录；其余静默跳过。顶部「检测续接」按钮可随时手动执行，状态栏显示结果汇总。
+- 启动时以及之后每 10 分钟自动「检测续接」：只对 2 小时内到期的账号续期；续期失败且已导入 Outlook 账号的会自动重新登录；其余静默跳过。顶部「检测续接」按钮可随时手动执行，状态栏显示结果汇总。
 
 ### 自动重新登录（Outlook 邮箱验证码，仅 Windows）
 - 登录彻底失效时可自动重新登录：卡片右键「重新登录（自动接码）」，或在刷新额度失败时自动触发（同账号 30 分钟内最多一次）。
@@ -61,7 +61,13 @@
 3. 首次读取钥匙串中的 Factory 登录密钥时系统会弹窗，请选择「始终允许」。
 4. 数据存放在 `~/Library/Application Support/vwFactory/`。
 
-macOS 版已实测：检测 Factory、多账号并行、切回窗口、重命名/删除账号、会话中心、登录回调、移入废纸篓。暂未实测：额度刷新与云端会话操作、Intel 机型。macOS 版暂无自动接码。
+macOS 版已实测：检测 Factory、多账号并行、切回窗口、重命名/删除账号、会话中心、登录回调、移入废纸篓、导入 Outlook 账号行自动接码登录、检测续接。暂未实测：Intel 机型。
+
+## 源码与构建
+
+- `vwFactory-src/`：共享核心逻辑 + Windows WinForms 界面（.NET Framework 4.8）。Windows 上运行 `build-vwfactory.ps1` 编译出 `vwFactory.exe`。
+- `vwFactory-avalonia/`：macOS / Linux 的 Avalonia 界面与平台实现，直接引用 `vwFactory-src/vwFactory/*.cs` 共享代码（.NET 8）。在 Mac 上执行 `vwFactory-avalonia/build-mac.sh [osx-arm64|osx-x64|all]` 生成 `dist/vwFactory-<rid>.zip`。
+- `vwFactory-avalonia/tools/`：Mac 版自动接码脚本（纯协议，无浏览器）及其 Python 依赖；`tools/factory_relogin.exe` 是 Windows 版对应的可执行文件。
 
 ## 说明与限制
 
